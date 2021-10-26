@@ -60,7 +60,7 @@ spec:
           volumeMounts:
             - name: data
               mountPath: /config/Jackett
-              subPath: {{ include "jackett.fullname" . }}
+              subPath: {{ .Values.volume.subPath }}
 
       volumes:
         - name: data

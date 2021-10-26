@@ -4,7 +4,7 @@
 replicaCount: 1
 
 image:
-  repository: linuxserver/jackett
+  repository: lscr.io/linuxserver/jackett
   pullPolicy: IfNotPresent
   tag: "latest"
 
@@ -12,14 +12,14 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
-config:
-  tz: "Etc/GMT"
-  auto_update: "true"
-  puid: 10000
-  pgid: 10001
+tz: "UTC"
+auto_update: "true"
+puid: 10000
+pgid: 10001
 
 volume:
   capacity: 1Gi 
+  subPath: "jackett"
 
 service:
   type: LoadBalancer

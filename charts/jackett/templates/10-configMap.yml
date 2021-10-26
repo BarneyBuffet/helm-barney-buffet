@@ -8,10 +8,10 @@ metadata:
     {{- include "jackett.labels" . | nindent 4 }}
 
 data:
-  TZ: "{{ .Values.config.tz }}"
-  AUTO_UPDATE: "{{ .Values.config.auto_update }}"
-  PUID: "{{ .Values.config.puid }}"
-  PGID: "{{ .Values.config.pgid }}"
+  TZ: "{{ .Values.tz }}"
+  AUTO_UPDATE: "{{ .Values.auto_update }}"
+  PUID: "{{ .Values.puid }}"
+  PGID: "{{ .Values.pgid }}"
   UMASK: "022"
 
 
