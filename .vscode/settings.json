@@ -12,6 +12,7 @@
         "nonroot",
         "PGID",
         "PUID",
+        "radarr",
         "rarrs",
         "sonarr",
         "WEBPROXY"
