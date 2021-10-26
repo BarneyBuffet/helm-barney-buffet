@@ -61,8 +61,13 @@ spec:
             - name: data
               mountPath: /config/Jackett
               subPath: {{ .Values.volume.subPath }}
+            - name: downloads
+              mountPath: /downloads
 
       volumes:
         - name: data
           persistentVolumeClaim:
             claimName: usb-local
+        - name: downloads
+          persistentVolumeClaim:
+            claimName: downloads
