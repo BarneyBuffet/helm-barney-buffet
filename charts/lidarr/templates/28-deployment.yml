@@ -60,14 +60,11 @@ spec:
           volumeMounts:
             - name: data
               mountPath: /config
-              subPath: {{ include "lidarr.fullname" . }}
-
+              subPath: {{ .Values.volume.subPath }}
             - name: music
               mountPath: /music
-
             - name: downloads
               mountPath: /downloads
-
             - name: localtime
               mountPath: /etc/localtime
               readOnly: true
@@ -76,15 +73,12 @@ spec:
         - name: data
           persistentVolumeClaim:
             claimName: usb-local
-
         - name: music
           persistentVolumeClaim:
             claimName: music
-
         - name: downloads
           persistentVolumeClaim:
             claimName: downloads
-            
         - name: localtime
           hostPath:
             path: /etc/localtime

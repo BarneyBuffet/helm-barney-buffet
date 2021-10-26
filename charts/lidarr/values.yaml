@@ -1,7 +1,7 @@
 replicaCount: 1
 
 image:
-  repository: linuxserver/lidarr
+  repository: lscr.io/linuxserver/lidarr
   pullPolicy: IfNotPresent
   tag: "latest"
 
@@ -9,15 +9,15 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
-config:
-  tz: "Etc/GMT"
-  puid: 10000
-  pgid: 10001
+tz: "Etc/GMT"
+puid: 10000
+pgid: 10001
 
 volume:
   size: 300Gi
   accessModes: "ReadWriteMany"
   storageClassName: raid
+  subPath: "lidarr"
 
 nfs:
   server: 192.168.0.5
