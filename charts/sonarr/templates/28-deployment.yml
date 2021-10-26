@@ -58,7 +58,7 @@ spec:
                 name: {{ include "sonarr.fullname" . }}
 
           volumeMounts:
-            - name: data
+            - name: config
               mountPath: /config
               subPath: {{ include "sonarr.fullname" . }}
             - name: tv-shows
@@ -70,7 +70,7 @@ spec:
               readOnly: true
 
       volumes:
-        - name: data
+        - name: config
           persistentVolumeClaim:
             claimName: usb-local
         - name: tv-shows

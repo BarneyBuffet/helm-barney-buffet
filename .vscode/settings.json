@@ -5,6 +5,7 @@
         "jackett",
         "kubernetes",
         "linuxserver",
+        "localtime",
         "lscr",
         "nfsvers",
         "nindent",
@@ -12,6 +13,7 @@
         "PGID",
         "PUID",
         "rarrs",
+        "sonarr",
         "WEBPROXY"
     ]
 }

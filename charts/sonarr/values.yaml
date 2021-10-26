@@ -1,7 +1,7 @@
 replicaCount: 1
 
 image:
-  repository: linuxserver/sonarr
+  repository: lscr.io/linuxserver/sonarr
   pullPolicy: IfNotPresent
   tag: "latest"
 
@@ -9,10 +9,9 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
-config:
-  tz: "Etc/GMT"
-  puid: 10000
-  pgid: 10001
+tz: "Etc/GMT"
+puid: 10000
+pgid: 10001
 
 volume:
   size: 300Gi
