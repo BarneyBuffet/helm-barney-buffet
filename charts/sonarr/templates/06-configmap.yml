@@ -11,4 +11,4 @@ data:
   TZ: "{{ .Values.config.tz }}"
   PUID: "{{ .Values.config.puid }}"
   PGID: "{{ .Values.config.pgid }}"
-  UMASK: "022"
+  UMASK: "0022"

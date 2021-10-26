@@ -1,7 +1,7 @@
 replicaCount: 1
 
 image:
-  repository: linuxserver/radarr
+  repository: lscr.io/linuxserver/radarr
   pullPolicy: IfNotPresent
   tag: "latest"
 
