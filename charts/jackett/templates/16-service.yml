@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+
+metadata:
+  name: {{ include "jackett.fullname" . }}
+  labels:
+    {{- include "jackett.labels" . | nindent 4 }}
+    
+spec:
+  selector:
+    {{- include "jackett.selectorLabels" . | nindent 4 }}
+
+  type: {{ .Values.service.type }}
+  externalTrafficPolicy: {{ .Values.service.externalTrafficPolicy }}
+  loadBalancerIP: {{ .Values.service.loadBalancerIP }}
+
+  ports:
+    - name: {{ include "jackett.fullname" . }}
+      protocol: TCP
+      port: {{ .Values.service.port }}
+      targetPort: gui

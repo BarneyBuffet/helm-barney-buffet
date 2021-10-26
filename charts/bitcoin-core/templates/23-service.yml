@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Service
+
+metadata:
+  name: {{ include "bitcoin-core.fullname" . }}
+  labels:
+    {{- include "bitcoin-core.labels" . | nindent 4 }}
+  annotations:
+    metallb.universe.tf/allow-shared-ip: {{ .Release.Namespace }}
+
+spec:
+  type: {{ .Values.service.type }}
+  externalTrafficPolicy: {{ .Values.service.externalTrafficPolicy }}
+  loadBalancerIP: {{ .Values.service.loadBalancerIP }}
+
+  ports:
+    - name: rcp
+      port: {{ .Values.service.ports.rcp }}
+      protocol: TCP
+      targetPort: rcp
+    - name: zmqpubrawblock
+      port: {{ .Values.service.ports.zmqPubRawBlock }}
+      protocol: TCP
+      targetPort: zmqpubrawblock
+    - name: zmqpubrawtx
+      port: {{ .Values.service.ports.zmqPubRawTx }}
+      protocol: TCP
+      targetPort: zmqpubrawtx
+
+  selector:
+    {{- include "bitcoin-core.selectorLabels" . | nindent 4 }}

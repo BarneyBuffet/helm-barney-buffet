@@ -1,0 +1,12 @@
+dependencies:
+- name: tor
+  repository: https://barneybuffet.github.io/helm-barney-buffet/
+  version: 0.1.0
+- name: bitcoin-core
+  repository: https://barneybuffet.github.io/helm-barney-buffet/
+  version: 0.1.0
+- name: btc-rpc-explorer
+  repository: https://barneybuffet.github.io/helm-barney-buffet/
+  version: 0.1.0
+digest: sha256:a1b2cb5da35ffafada89c1468febcf01a17f232529605fe91196df723e5c3857
+generated: "2021-09-26T22:07:26.481891+10:00"

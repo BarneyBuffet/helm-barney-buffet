@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+  name: {{ include "transmission.fullname" . }}
+  labels:
+    {{- include "transmission.labels" . | nindent 4 }}
+
+data:
+  PUID: "{{ .Values.puid }}"
+  PGID: "{{ .Values.pgid }}"
+  TRANSMISSION_UMASK: "022"
+  TZ: {{ .Values.tz }}
+  OPENVPN_CONFIG: "{{ .Values.openvpn.config }}"
+  OPENVPN_OPTS: "--inactive 3600 --ping 10 --ping-exit 60 --dhcp-option DNS 9.9.9.9"
+  LOCAL_NETWORK: "{{ .Values.openvpn.localNetwork }}"
+  CREATE_TUN_DEVICE: "true"
+  GLOBAL_APPLY_PERMISSIONS: "true"
+  TRANSMISSION_HOME: "/data/transmission-home"
+  TRANSMISSION_DOWNLOAD_DIR: "/data/downloads"
+  TRANSMISSION_INCOMPLETE_DIR: "/data/downloads/#incomplete"
+  TRANSMISSION_WATCH_DIR: "/data/downloads/#watch"
+  TRANSMISSION_RPC_AUTHENTICATION_REQUIRED: "true"
+  TRANSMISSION_DOWNLOAD_QUEUE_SIZE: "4"
+  TRANSMISSION_WEB_UI: "transmission-web-control"
+  TRANSMISSION_SCRAPE_PAUSED_TORRENTS_ENABLED: "false"
+  TRANSMISSION_ALT_SPEED_DOWN: "1000"
+  TRANSMISSION_ALT_SPEED_ENABLED: "true"
+  TRANSMISSION_ALT_SPEED_TIME_BEGIN: "300"
+  TRANSMISSION_ALT_SPEED_TIME_DAY: "127"
+  TRANSMISSION_ALT_SPEED_TIME_ENABLED: "true"
+  TRANSMISSION_ALT_SPEED_TIME_END: "1380"
+  TRANSMISSION_ALT_SPEED_UP: "2"
+  TRANSMISSION_PEER_PORT: "47444"
+  ENABLE_UFW: "false"
+  UFW_ALLOW_GW_NET: "false"
+  WEBPROXY_ENABLED: "false"
+  HEALTH_CHECK_HOST: "9.9.9.9"

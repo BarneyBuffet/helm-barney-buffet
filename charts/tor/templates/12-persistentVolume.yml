@@ -1,0 +1,30 @@
+{{- if .Values.volume.create -}}
+apiVersion: v1
+kind: PersistentVolume
+
+metadata:
+  name: "{{ include "tor.fullname" . }}"
+  labels:
+    {{- include "tor.labels" . | nindent 4 }}
+    
+spec:
+  capacity:
+    storage: {{ .Values.volume.size }}
+
+  accessModes: ["{{ .Values.volume.accessModes }}"]
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: {{ .Values.volume.storageClassName }}
+
+  mountOptions:
+    - hard
+    - nfsvers=3
+
+  claimRef:
+    name: {{ include "tor.fullname" . }}
+    namespace: {{ .Release.Namespace }}
+    
+  nfs:
+    server: {{ .Values.nfs.server }}
+    path: {{ .Values.nfs.path }}
+    readOnly: false
+{{- end }}

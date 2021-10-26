@@ -1,0 +1,111 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: {{ include "bitcoin-core.fullname" . }}
+  labels:
+    {{- include "bitcoin-core.labels" . | nindent 4 }}
+
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+
+  selector:
+    matchLabels:
+      {{- include "bitcoin-core.selectorLabels" . | nindent 6 }}
+
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "bitcoin-core.selectorLabels" . | nindent 8 }}
+
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+
+      serviceAccountName: {{ include "bitcoin-core.serviceAccountName" . }}
+
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+
+          ports:
+            - name: rcp
+              containerPort: 8332
+            - name: zmqpubrawblock
+              containerPort: 28332
+            - name: zmqpubrawtx
+              containerPort: 28333
+
+          envFrom:
+            - secretRef:
+                name: {{ include "bitcoin-core.fullname" . }}
+            - configMapRef:
+                name: {{ include "bitcoin-core.fullname" . }}
+
+          # livenessProbe:
+          #   exec:
+          #     command:
+          #       - sh
+          #       - -c
+          #       - /usr/local/bin/healthcheck.sh
+          #   initialDelaySeconds: 60
+          #   failureThreshold: 10
+          #   timeoutSeconds: 5
+
+          # readinessProbe:
+          #   exec:
+          #     command:
+          #       - sh
+          #       - -c
+          #       - /usr/local/bin/healthcheck.sh
+          #   initialDelaySeconds: 60
+          #   failureThreshold: 10
+          #   timeoutSeconds: 5
+
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+
+          volumeMounts:
+            - name: data
+              mountPath: /bitcoin
+              subPath: {{ .Values.nfs.subPath }}
+            - name: tor
+              mountPath: /tor
+              subPath: {{ .Values.nfs.torSubPath }}
+
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: {{ include "bitcoin-core.fullname" . }}
+        - name: tor
+          persistentVolumeClaim:
+            claimName: {{ .Values.volume.torClaimName }}
+
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

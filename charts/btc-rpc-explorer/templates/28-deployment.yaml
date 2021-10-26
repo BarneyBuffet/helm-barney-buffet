@@ -1,0 +1,102 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: {{ include "btc-rpc-explorer.fullname" . }}
+  labels:
+    {{- include "btc-rpc-explorer.labels" . | nindent 4 }}
+
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+
+  selector:
+    matchLabels:
+      {{- include "btc-rpc-explorer.selectorLabels" . | nindent 6 }}
+
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "btc-rpc-explorer.selectorLabels" . | nindent 8 }}
+
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+
+      serviceAccountName: {{ include "btc-rpc-explorer.serviceAccountName" . }}
+
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+
+          ports:
+            - name: gui
+              containerPort: {{ .Values.explorer.port }}
+              protocol: TCP
+
+          envFrom:
+            - secretRef:
+                name: {{ include "btc-rpc-explorer.fullname" . }}
+            - configMapRef:
+                name: {{ include "btc-rpc-explorer.fullname" . }}
+
+          livenessProbe:
+            tcpSocket:
+              port: gui
+            initialDelaySeconds: 60
+            failureThreshold: 10
+            timeoutSeconds: 5
+
+          readinessProbe:
+            tcpSocket:
+              port: gui
+            initialDelaySeconds: 60
+            failureThreshold: 10
+            timeoutSeconds: 5
+
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+
+          volumeMounts:
+            - name: bitcoin
+              mountPath: "/bitcoin"
+              subPath: {{ .Values.nfs.bitcoinSubPath }}
+            - name: {{ include "btc-rpc-explorer.fullname" . }}
+              mountPath: "/btc-rpc-explorer"
+              subPath: {{ .Values.nfs.subPath }}
+
+      volumes:
+        - name: bitcoin
+          persistentVolumeClaim:
+            claimName: {{ .Values.volume.bitcoinClaim }}
+        - name: {{ include "btc-rpc-explorer.fullname" . }}
+          persistentVolumeClaim:
+            claimName: {{ include "btc-rpc-explorer.fullname" . }}
+
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

@@ -1,0 +1,103 @@
+replicaCount: 1
+
+image:
+  repository: haugene/transmission-openvpn
+  pullPolicy: IfNotPresent
+  tag: "latest"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+puid: "1000"
+pgid: "1001"
+tz: "UTC"
+
+vpn:
+  provider: --vpn provider--
+  username: --vpn username--
+  password: --vpn password--
+
+openvpn:
+  config: "pick_vpn_config"
+  localNetwork: "192.168.0.0/16"
+
+transmission:
+  username: --transmission web gui username--
+  password: --transmission web gui password--
+
+nfs:
+  server: 192.168.0.4
+  path: 
+    transmission: "/nfs/folder/path"
+    downloads: "/nfs/folder/path"
+
+volume:
+  size: 
+    transmission: 1Gi
+    downloads: 100Gi
+  accessModes: "ReadWriteMany"
+  storageClassName: 
+    transmission: raid
+    downloads: basic
+  subPath: 
+    transmission: "transmission"
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+
+securityContext:
+  allowPrivilegeEscalation: true
+  capabilities:
+    add:
+    - NET_ADMIN
+  privileged: true
+
+service:
+  type: LoadBalancer
+  loadBalancerIP: 192.168.0.6
+  externalTrafficPolicy: Cluster
+  port: 80
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+livenessProbe:
+  initialDelaySeconds: 150
+  periodSeconds: 30
+  tcpSocket:
+    port: gui
+
+readinessProbe:
+  initialDelaySeconds: 150
+  periodSeconds: 30
+  tcpSocket:
+    port: gui
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

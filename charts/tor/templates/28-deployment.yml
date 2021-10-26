@@ -1,0 +1,109 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: {{ include "tor.fullname" . }}
+  labels:
+    {{- include "tor.labels" . | nindent 4 }}
+
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+
+  selector:
+    matchLabels:
+      {{- include "tor.selectorLabels" . | nindent 6 }}
+
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "tor.selectorLabels" . | nindent 8 }}
+
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+
+      serviceAccountName: {{ include "tor.serviceAccountName" . }}
+
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+
+          ports:
+            - name: proxy
+              containerPort: 9050
+              protocol: TCP
+            - name: control
+              containerPort: 9051
+              protocol: TCP
+
+          envFrom:
+            - secretRef:
+                name: {{ include "tor.fullname" . }}
+            - configMapRef:
+                name: {{ include "tor.fullname" . }}
+
+          livenessProbe:
+            exec:
+              command:
+                - sh
+                - -c
+                - "curl --fail --socks5 127.0.0.1:9050 --socks5-hostname 127.0.0.1:9050 -I -L 'https://check.torproject.org/' || exit 1"
+            initialDelaySeconds: 60
+            failureThreshold: 10
+            timeoutSeconds: 5
+
+          readinessProbe:
+            exec:
+              command:
+                - sh
+                - -c
+                - "curl --fail --socks5 127.0.0.1:9050 --socks5-hostname 127.0.0.1:9050 -I -L 'https://check.torproject.org/' || exit 1"
+            initialDelaySeconds: 60
+            failureThreshold: 10
+            timeoutSeconds: 5
+
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+
+          {{- if .Values.volume.create }}
+          volumeMounts:
+            - name: data
+              mountPath: /tor
+              subPath: {{ .Values.nfs.subPath }}
+          {{- end }}
+
+      {{- if .Values.volume.create }}
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: {{ include "tor.fullname" . }}
+      {{- end }}
+
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

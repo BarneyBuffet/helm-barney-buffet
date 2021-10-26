@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+
+metadata:
+  name: {{ include "btc-rpc-explorer.fullname" . }}
+  labels:
+    {{- include "btc-rpc-explorer.labels" . | nindent 4 }}
+
+spec:
+  storageClassName: {{ .Values.volume.storageClassName }}
+  accessModes: ["{{ .Values.volume.accessModes }}"]
+    
+  resources:
+    requests:
+      storage: {{ .Values.volume.size }}

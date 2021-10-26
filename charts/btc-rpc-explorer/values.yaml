@@ -1,0 +1,175 @@
+replicaCount: 1
+
+image:
+  repository: barneybuffet/btc-rpc-explorer
+  pullPolicy: IfNotPresent
+  tag: "latest"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+puid: "10000"
+pgid: "10001"
+
+## BTC-RPC-EXPLORER
+explorer:
+  overwriteConfig: "false"
+  ## Log config file at start up
+  logConfig: "false"
+  ## Bind btc-rpc-explorer to host
+  host: "192.168.0.2"
+  ## The base URL. If you want to run it elsewhere than on /
+  baseURL: /
+  ## Bind btc-rpc-explorer to host port
+  port: "3002"
+  ## Password protection for site via basic auth (enter any username, only the password is checked)
+  password: ""
+  ## The active coin. Only officially supported value is "BTC".
+  coin: "BTC"
+  ## Select optional "address API" to display address tx lists and balances
+  ## Options: electrum, electrumx, blockchain.com, blockchair.com, blockcypher.com
+  addressAPI: "blockcypher.com"
+  ## Default: hash of credentials
+  cookieSecret: ""
+  ## Whether public-demo aspects of the site are active
+  demo: "false"
+  ## Set to false to enable resource-intensive features, including: UTXO set summary querying
+  slowDevice: "false"
+  ## Privacy mode disables: Exchange-rate queries, IP-geolocation queries
+  privacyMode: "false"
+  ## Don't request currency exchange rates
+  noRates: "false"
+  ## The number of recent blocks to search for transactions when txindex is disabled
+  nonTXIndexSearchDepth: ""
+  ## UI Theme (light|dark)
+  ui: ""
+  ## Set the number of recent blocks shown on the homepage
+  latestCount: "10"
+  ## Set the number of blocks per page on the browse-blocks page
+  pageCount: "50"
+  ## Optional logging settings | '*' Enable all | 'btcexp:*' Enable all logging specific to btc-rpc-explorer
+  debug: "btcexp:app,btcexp:error"
+  ## File cache directory
+  cacheDir: ""
+  ## Old space size
+  oldSpaceMaxSize: "2048"
+  ## Optional API keys
+  keys:
+    ## https://analytics.withgoogle.com/
+    ganalytics: ""
+    ## https://sentry.io/
+    sentry: ""
+    ## https://ipstack.com/
+    ipStack: ""
+    ## https://www.mapbox.com/
+    mapBox: ""
+  plausible:
+    domain: ""
+    scriptUrl: ""
+
+## Electrum server
+electrum:
+  servers: ""
+  txIndex: ""
+
+## Bitcoin core server settings
+bitcoinCore:
+  ## Bitcoin core RPC host
+  host: "192.168.0.2"
+  ## Bitcoin core RPC host port
+  port: "8332"
+  ## Bitcoin core RPC authentication name
+  username: ""
+  ## Bitcoin core RPC authentication password
+  password: ""
+  ## Where to find the bitcoin core cookie
+  cookieLocation: "/bitcoin/.cookie"
+  ## BItcoin core RPC timeout failure (ms)
+  timeout: "5000"
+  ## Set number of concurrent RPC requests. Should be lower than your node's "rpcworkqueue" value.
+  ## Note that Bitcoin Core's default rpcworkqueue=16
+  concurrency: "2"
+  ## Disable app's in-memory RPC caching to reduce memory usage
+  disableInMemory: "false"
+  ## Enable to allow access to all RPC methods
+  allowAll: "false"
+  ## Custom RPC method blacklist
+  blackList: ""
+
+## Optional redis server for RPC caching
+redis:
+  ## Redis URI
+  host: ""
+  ## Redis URI port
+  port: "6379"
+
+sso:
+  tokenFile: ""
+  redirect: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: LoadBalancer
+  loadBalancerIP: 192.168.0.2
+  externalTrafficPolicy: Cluster
+  ports:
+    gui: 3002
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+volume:
+  size: 1Gi
+  accessModes: "ReadWriteMany"
+  storageClassName: raid
+  bitcoinClaim: "bitcoin-core"
+
+nfs:
+  server: 192.168.0.2
+  path: "/volume/raid"
+  subPath: "btc-rpc-explorer"
+  bitcoinSubPath: /bitcoin

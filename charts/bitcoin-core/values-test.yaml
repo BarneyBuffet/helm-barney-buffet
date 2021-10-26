@@ -1,0 +1,213 @@
+## helm install -n test -f values-test.yaml --debug --dry-run "bitcoin-core" .
+
+replicaCount: 1
+
+image:
+  repository: barneybuffet/bitcoin-core
+  pullPolicy: Always
+  tag: "22.0"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: "test-bitcoin-core"
+
+puid: "10000"
+pgid: "10001"
+
+bitcoin:
+  configOverwrite: "true"
+  logConfig: "true"
+  alertNotify: "alert_notify_comand"
+  assumeValid: "hex"
+  blockFilterIndex: "1"
+  blockNotify: "block_notify_command"
+  blockReconstructionExtraTxn: "100"
+  blocksDir: "/bitcoin"
+  blocksOnly: "false"
+  coinStatsIndex: "false"
+  conf: "bitcoin.conf"
+  daemon: "true"
+  daemonWait: "false"
+  # DATA_DIR = \ # This is set by the image above so lets not double up
+  dbCache: "450"
+  debugLogFile: "debug.log"
+  includeConf: "include_bitcoin.conf"
+  loadBlock: "block_file"
+  maxMempool: "300"
+  maxOrphanTx: "100"
+  mempoolExpiry: "336"
+  par: "0"
+  persistMempool: "true"
+  pid: "bitcoin.pid"
+  prune: "3"
+  reindex: "true"
+  reindexChainState: "true"
+  settings: "settings.json"
+  startupNotify: "startup_notify_command"
+  sysPerms: "false"
+  txIndex: "false"
+  addNode: "node_1:8333, node_2:8333"
+  asmap: "ip_asn.map"
+  banTime: "86400"
+  bind: "127.0.0.1:8334=onion,127.0.0.2:8334=onion,127.0.0.3:8334=onion"
+  connect: "192.168.0.112,192.168.0.113"
+  discover: "true"
+  dns: "true"
+  dnsSeed: "true"
+  externalIp: "192.168.0.2"
+  fixedSeeds: "true"
+  forceDnsSeed: "false"
+  i2PAcceptIncoming: "true"
+  i2PSam: "192.680.0.11:3333,192.680.0.12:3333,192.680.0.13:3333"
+  listen: "true"
+  listenOnion: "true"
+  maxConnections: "125"
+  maxReceiveBuffer: "5000"
+  maxSendBuffer: "1000"
+  maxTimeAdjustment: "4200"
+  maxUploadTarget: "0"
+  natPmp: "false"
+  networkActive: "true"
+  onion: "127.0.0.1:9050"
+  onlyNet: "onion,ip2"
+  peerBlockFilters: "false"
+  peerBloomFilters: "false"
+  permitBareMultisig: "true"
+  port: "8333"
+  proxy: "127.0.0.1:9050"
+  proxyRandomize: "true"
+  seedNode: "192.168.0.56,192.168.0.57,192.168.0.58"
+  timeout: "5000"
+  torControl: "127.0.0.1:9051"
+  torPassword: "tor_password"
+  upnp: "false"
+  whiteBind: "allow@192.168.0.45,allow@192.168.0.45,allow@192.168.0.45"
+  whiteList: "allow@192.168.0.45,allow@192.168.0.45,allow@192.168.0.45"
+  addressType: "bech32"
+  avoidPartialSpends: "false"
+  changeType: "legacy"
+  disableWallet: "false"
+  discardFee: "0.0001"
+  fallbackFee: "0.00"
+  keyPool: "1000"
+  maxApsFee: "0.00"
+  minTxFee: "0.00001"
+  maxTxFee: "0.10"
+  payTxFee: "0.00"
+  rescan: "false"
+  signer: "command_to_sign"
+  spendZeroConfChange: "true"
+  txConfirmTarget: "6"
+  wallet: "/path/to/wallet"
+  walletBroadcast: "true"
+  walletDir: "/wallet/dir"
+  walletNotify: "notify_command"
+  walletRbf: "false"
+  zmqPubHashBlock: "tcp://ip-1:28332,tcp://ip-2:28332,tcp://ip-3:28332"
+  zmqPubHashBlockHwm: "1000"
+  zmqPubHashTx: "tcp://ip-1:28332,tcp://ip-2:28332,tcp://ip-3:28332"
+  zmqPubHashTxHwm: "1000"
+  zmqPubRawBlock: "tcp://ip-1:28332,tcp://ip-2:28332,tcp://ip-3:28332"
+  zmqPubRawBlockHwm: "1000"
+  zmqPubRawTx: "ipc://bitcoin/zmq.socket"
+  zmqPubRawTxHwm: "1000"
+  zmqPubSequence: "ipc://bitcoin/zmq.socket"
+  zmqPubSequenceHwm: "1000"
+  debug: "tor,rpc,reindex"
+  debugExclude: "bench"
+  logIps: "false"
+  logSourceLocations: "false"
+  logTimestamps: "true"
+  printToConsole: "true"
+  shrinkDebugFile: "true"
+  uaComment: "<cmt>"
+  chain: "main"
+  signet: "true"
+  signetChallenge: "false"
+  signetSeedNode: "192.168.0.56:8333,192.168.0.57:8333,192.168.0.58:8333"
+  testNet: "true"
+  bytesPerSigop: "20"
+  dataCarrier: "true"
+  dataCarrierSize: "83"
+  minRelayTxFee: "0.0001"
+  whiteListForceRelay: "true"
+  whiteListRelay: "true"
+  blockMaxWeight: "3996000"
+  blockMinTxFee: "0.00001"
+  rest: "false"
+  rpcAllowIp: "127.0.0.1,192.168.0.1/24"
+  rpcBind: "127.0.0.1:8332,127.0.0.2:8332"
+  rpcCookieFile: "/location/of/cookie"
+  rpcPassword: "password"
+  rpcPort: "8332"
+  rpcSerialVersion: "true"
+  rpcThreads: "4"
+  rpcUser: "user"
+  rpcWhiteList: "rpc_1, rpc_2"
+  rpcWhiteListDefault: "true"
+  server: "true"
+
+volume:
+  size: 1000Gi
+  accessModes: "ReadWriteMany"
+  storageClassName: raid
+
+nfs:
+  server: 192.168.0.2
+  path: "/volume/raid"
+  subPath: "test/bitcoin-core"
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: LoadBalancer
+  loadBalancerIP: 192.168.0.2
+  externalTrafficPolicy: Cluster
+  ports:
+    rcp: 8332
+    zmq: 28332
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

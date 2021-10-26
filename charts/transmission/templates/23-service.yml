@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Service
+
+metadata:
+  name: {{ include "transmission.fullname" . }}
+  labels:
+    {{- include "transmission.labels" . | nindent 4 }}
+
+spec:
+  ports:
+    - name: {{ include "transmission.fullname" . }}
+      protocol: TCP
+      port: {{ .Values.service.port }}
+      targetPort: gui
+    - name: rcp
+      protocol: TCP
+      port: 9091
+      targetPort: gui
+
+  selector:
+    {{- include "transmission.selectorLabels" . | nindent 4 }}
+
+  type: {{ .Values.service.type }}
+  externalTrafficPolicy: {{ .Values.service.externalTrafficPolicy }}
+  loadBalancerIP: {{ .Values.service.loadBalancerIP }}
+

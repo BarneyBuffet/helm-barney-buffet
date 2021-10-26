@@ -1,0 +1,278 @@
+## helm install -n test --debug --dry-run bitcoin-node .
+
+tor:
+  image:
+    tag: "0.4.6.7"
+  puid: "1001"
+  pgid: "100"
+  config:
+    configOverwrite: "true"
+    proxy:
+      enable: "true"
+      port: "9050"
+      accept: "accept 127.0.0.1,accept 10.0.0.0/8,accept 192.168.0.0/16"
+    control:
+      enable: "true"
+      port: "9051"
+      cookie: "true"
+  volume:
+    storageClassName: "basic"
+  nfs:
+    server: "192.168.1.4"
+    path: "/nfs/server/path"
+    subPath: "bitcoin-node/tor"
+  service:
+    loadBalancerIP: "192.168.1.16"
+
+bitcoin-core:
+  image:
+    tag: "22.0"
+  puid: "1001"
+  pgid: "100"
+  config:
+    configOverwrite: "true"
+    logConfig: "false"
+    alertNotify: ""
+    assumeValid: ""
+    blockFilterIndex: "1"
+    blockNotify: ""
+    blockReconstructionExtraTxn: ""
+    blocksDir: ""
+    blocksOnly: ""
+    coinStatsIndex: ""
+    conf: ""
+    daemon: ""
+    daemonWait: ""
+    dbCache: "2046"
+    debugLogFile: ""
+    includeConf: ""
+    loadBlock: ""
+    maxMempool: ""
+    maxOrphanTx: ""
+    mempoolExpiry: ""
+    par: ""
+    persistMempool: ""
+    pid: ""
+    prune: ""
+    reindex: ""
+    reindexChainState: ""
+    settings: ""
+    startupNotify: ""
+    sysPerms: ""
+    txIndex: "true"
+    addNode: ""
+    asmap: ""
+    banTime: ""
+    bind: "0.0.0.0:8334=onion"
+    connect: ""
+    discover: ""
+    dns: ""
+    dnsSeed: ""
+    externalIp: ""
+    fixedSeeds: ""
+    forceDnsSeed: ""
+    i2PAcceptIncoming: ""
+    i2PSam: ""
+    listen: "true"
+    listenOnion: "true"
+    maxConnections: ""
+    maxReceiveBuffer: ""
+    maxSendBuffer: ""
+    maxTimeAdjustment: ""
+    natPmp: ""
+    networkActive: ""
+    onion: "192.168.1.16:9050"
+    onlyNet: "onion"
+    peerBlockFilters: ""
+    peerBloomFilters: ""
+    permitBareMultisig: ""
+    port: ""
+    proxy: "192.168.1.16:9050"
+    proxyRandomize: ""
+    seedNode: ""
+    timeout: ""
+    torControl: "192.168.1.16:9051"
+    torPassword: ""
+    upnp: ""
+    whiteBind: ""
+    whiteList: ""
+    addressType: ""
+    avoidPartialSpends: ""
+    changeType: ""
+    disableWallet: ""
+    discardFee: ""
+    fallbackFee: ""
+    keyPool: ""
+    maxApsFee: ""
+    minTxFee: ""
+    maxTxFee: ""
+    payTxFee: ""
+    rescan: ""
+    signer: ""
+    spendZeroConfChange: ""
+    txConfirmTarget: ""
+    wallet: ""
+    walletBroadcast: ""
+    walletDir: ""
+    walletNotify: ""
+    walletRbf: ""
+    zmqPubHashBlock: ""
+    zmqPubHashBlockHwm: ""
+    zmqPubHashTx: ""
+    zmqPubHashTxHwm: ""
+    zmqPubRawBlock: ""
+    zmqPubRawBlockHwm: ""
+    zmqPubRawTx: ""
+    zmqPubRawTxHwm: ""
+    zmqPubSequence: ""
+    zmqPubSequenceHwm: ""
+    debug: ""
+    debugExclude: ""
+    logIps: ""
+    logSourceLocations: ""
+    logTimestamps: ""
+    printToConsole: ""
+    shrinkDebugFile: ""
+    uaComment: ""
+    chain: ""
+    signet: ""
+    signetChallenge: ""
+    signetSeedNode: ""
+    testNet: ""
+    bytesPerSigop: ""
+    dataCarrier: ""
+    dataCarrierSize: ""
+    minRelayTxFee: ""
+    whiteListForceRelay: ""
+    whiteListRelay: ""
+    blockMaxWeight: ""
+    blockMinTxFee: ""
+    rest: "true"
+    rpcAllowIp: "127.0.0.1,192.168.0.1/16,10.0.0.0/8"
+    rpcBind: "0.0.0.0"
+    rpcCookieFile: ""
+    rpcPassword: "**change_to_password**"
+    rpcPort: ""
+    rpcSerialVersion: ""
+    rpcThreads: ""
+    rpcUser: "barney"
+    rpcWhiteList: ""
+    rpcWhiteListDefault: ""
+    server: "true"
+  volume:
+    storageClassName: basic
+    torClaimName: bitcoin-node-tor
+  nfs:
+    server: "192.168.1.4"
+    path: "/nfs/server/path"
+    subPath: "bitcoin-node/bitcoin-core"
+    torSubPath: "bitcoin-node/tor"
+  service:
+    loadBalancerIP: "192.168.1.16"
+
+btc-rpc-explorer:
+  image:
+    tag: "3.2.0"
+  puid: "1001"
+  pgid: "100"
+  ## BTC-RPC-EXPLORER
+  explorer:
+    overwriteConfig: "true"
+    ## Log config file at start up
+    logConfig: "false"
+    ## Bind btc-rpc-explorer to host
+    host: "0.0.0.0"
+    ## The base URL. If you want to run it elsewhere than on /
+    baseURL: /
+    ## Bind btc-rpc-explorer to host port
+    port: "3002"
+    ## Password protection for site via basic auth (enter any username, only the password is checked)
+    password: "**btc_rpc_explorer_password"
+    ## The active coin. Only officially supported value is "BTC".
+    coin: "BTC"
+    ## Select optional "address API" to display address tx lists and balances
+    ## Options: electrum, electrumx, blockchain.com, blockchair.com, blockcypher.com
+    addressAPI: "blockcypher.com"
+    ## Default: hash of credentials
+    cookieSecret: ""
+    ## Whether public-demo aspects of the site are active
+    demo: "true"
+    ## Set to false to enable resource-intensive features, including: UTXO set summary querying
+    slowDevice: "false"
+    ## Privacy mode disables: Exchange-rate queries, IP-geolocation queries
+    privacyMode: "false"
+    ## Don't request currency exchange rates
+    noRates: "false"
+    ## The number of recent blocks to search for transactions when txindex is disabled
+    nonTXIndexSearchDepth: ""
+    ## UI Theme (light|dark)
+    ui: "dark"
+    ## Set the number of recent blocks shown on the homepage
+    latestCount: "10"
+    ## Set the number of blocks per page on the browse-blocks page
+    pageCount: "50"
+    ## Optional logging settings | '*' Enable all | 'btcexp:*' Enable all logging specific to btc-rpc-explorer
+    debug: "btcexp:app,btcexp:error"
+    ## File cache directory
+    cacheDir: ""
+    ## Old space size
+    oldSpaceMaxSize: "2048"
+    ## Optional API keys
+    keys:
+      ## https://analytics.withgoogle.com/
+      ganalytics: ""
+      ## https://sentry.io/
+      sentry: ""
+      ## https://ipstack.com/
+      ipStack: ""
+      ## https://www.mapbox.com/
+      mapBox: ""
+    plausible:
+      domain: ""
+      scriptUrl: ""
+  ## Electrum server
+  electrum:
+    servers: ""
+    txIndex: ""
+  ## Bitcoin core server settings
+  bitcoinCore:
+    ## Bitcoin core RPC host
+    host: "192.168.1.16"
+    ## Bitcoin core RPC host port
+    port: "8332"
+    ## Bitcoin core RPC authentication name
+    username: ""
+    ## Bitcoin core RPC authentication password
+    password: ""
+    ## Where to find the bitcoin core cookie
+    cookieLocation: "/bitcoin/.cookie"
+    ## BItcoin core RPC timeout failure (ms)
+    timeout: "5000"
+    ## Set number of concurrent RPC requests. Should be lower than your node's "rpcworkqueue" value.
+    ## Note that Bitcoin Core's default rpcworkqueue=16
+    concurrency: "2"
+    ## Disable app's in-memory RPC caching to reduce memory usage
+    disableInMemory: "false"
+    ## Enable to allow access to all RPC methods
+    allowAll: "true"
+    ## Custom RPC method blacklist
+    blackList: ""
+  ## Optional redis server for RPC caching
+  redis:
+    ## Redis URI
+    host: ""
+    ## Redis URI port
+    port: "6379"
+  sso:
+    tokenFile: ""
+    redirect: ""
+  service:
+    loadBalancerIP: "192.168.1.16"
+  volume:
+    storageClassName: "basic"
+    bitcoinClaim: "bitcoin-node-bitcoin-core"
+  nfs:
+    server: 192.168.1.4"
+    path: "/nfs/server/path"
+    subPath: "bitcoin-node/btc-rpc-explorer"
+    bitcoinSubPath: "bitcoin-node/bitcoin-core"
