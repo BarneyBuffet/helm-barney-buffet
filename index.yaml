@@ -3,7 +3,7 @@ entries:
   bitcoin-core:
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2021-10-27T09:18:46.655244+11:00"
+    created: "2021-10-27T09:21:32.811121+11:00"
     description: A Helm chart for running a bitcoin core node
     digest: e919e9752e5b84a9e15cb87e38f3bb47c4e01b2da021acce167228832a334017
     name: bitcoin-core
@@ -14,7 +14,7 @@ entries:
   btc-rpc-explorer:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2021-10-27T09:18:46.669812+11:00"
+    created: "2021-10-27T09:21:32.819724+11:00"
     description: A Helm chart for Kubernetes
     digest: 679ce84693d896d26a0a4a8fda3e076e9ef6f4719b8a510888558bc95decc434
     name: btc-rpc-explorer
@@ -25,7 +25,7 @@ entries:
   jackett:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2021-10-27T09:18:46.684402+11:00"
+    created: "2021-10-27T09:21:32.827256+11:00"
     description: A Helm chart for Jackett indexer
     digest: a408524670bab613636e72a52dc22f8e1c4015f91860daff29e3688203780185
     name: jackett
@@ -36,7 +36,7 @@ entries:
   lidarr:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2021-10-27T09:18:46.693068+11:00"
+    created: "2021-10-27T09:21:32.834737+11:00"
     description: A Helm chart for Kubernetes
     digest: f562cc009015b87eb17185a51a8ba6c22d03e916f7ce650de4bde1d156c63de5
     name: lidarr
@@ -47,9 +47,9 @@ entries:
   radarr:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2021-10-27T09:18:46.702297+11:00"
+    created: "2021-10-27T09:21:32.842038+11:00"
     description: A Helm chart for Kubernetes
-    digest: 340e3c536e9aa41530dd0192205f71248b8f92140d3d092d8a92c62c7e56c3f0
+    digest: bf9157f85f06e6f7121c6bae75b9495404823191b930a8df7aa1f3275fbd15ae
     name: radarr
     type: application
     urls:
@@ -58,9 +58,9 @@ entries:
   sonarr:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2021-10-27T09:18:46.710432+11:00"
+    created: "2021-10-27T09:21:32.85018+11:00"
     description: A Helm chart for Sonarr
-    digest: 6c31c4781ebfe73c9c519d13f3260ae07fff5b22794485657c8b084738d74523
+    digest: 46b3d1f15364ee958ff5be2166c9134a0a8425c3ce74aaae311d80c66550dc0f
     name: sonarr
     type: application
     urls:
@@ -69,7 +69,7 @@ entries:
   tor:
   - apiVersion: v2
     appVersion: 0.4.6.7
-    created: "2021-10-27T09:18:46.718581+11:00"
+    created: "2021-10-27T09:21:32.858056+11:00"
     description: A Helm chart for deploying a TOR proxy and control server.
     digest: f24136333e1ba705cbfb4c2c7fa188dec9016d8c43620648a990d9a5d26b1dee
     name: tor
@@ -80,7 +80,7 @@ entries:
   transmission:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2021-10-27T09:18:46.726878+11:00"
+    created: "2021-10-27T09:21:32.865657+11:00"
     description: A Helm chart for Transmission behind OpenVPN
     digest: 3ad2b3b4366922af1fed2b7c003ea475b3a67ca353e2aad33e6e62714c0a208a
     name: transmission
@@ -88,4 +88,4 @@ entries:
     urls:
     - https://barneybuffet.github.io/helm-barney-buffet/transmission-0.2.0.tgz
     version: 0.2.0
-generated: "2021-10-27T09:18:46.630366+11:00"
+generated: "2021-10-27T09:21:32.802467+11:00"

@@ -18,6 +18,7 @@ volume:
   size: 300Gi
   accessModes: "ReadWriteMany"
   storageClassName: raid
+  subPath: "radarr"
 
 nfs:
   server: 192.168.0.5

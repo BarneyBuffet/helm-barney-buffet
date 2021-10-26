@@ -60,7 +60,7 @@ spec:
           volumeMounts:
             - name: config
               mountPath: /config
-              subPath: {{ include "sonarr.fullname" . }}
+              subPath: {{ .Values.volume.subPath }}
             - name: tv-shows
               mountPath: /tv
             - name: downloads

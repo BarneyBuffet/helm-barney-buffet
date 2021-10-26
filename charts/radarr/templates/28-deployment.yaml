@@ -60,7 +60,7 @@ spec:
           volumeMounts:
             - name: data
               mountPath: /config
-              subPath: {{ include "radarr.fullname" . }}
+              subPath: {{ .Values.volume.subPath }}
             - name: movies
               mountPath: /movies
             - name: downloads
