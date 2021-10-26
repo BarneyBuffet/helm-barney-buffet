@@ -59,7 +59,7 @@ spec:
 
           volumeMounts:
             - name: data
-              mountPath: /config/Jackett
+              mountPath: /config
               subPath: {{ .Values.volume.subPath }}
             - name: downloads
               mountPath: /downloads
