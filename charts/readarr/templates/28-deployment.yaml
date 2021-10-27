@@ -1,0 +1,102 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "readarr.fullname" . }}
+  labels:
+    {{- include "readarr.labels" . | nindent 4 }}
+
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+
+  selector:
+    matchLabels:
+      {{- include "readarr.selectorLabels" . | nindent 6 }}
+
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "readarr.selectorLabels" . | nindent 8 }}
+
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+
+      serviceAccountName: {{ include "readarr.serviceAccountName" . }}
+
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+
+          envFrom:
+            - configMapRef:
+                name: {{ include "readarr.fullname" . }}
+
+          ports:
+            - name: gui
+              containerPort: 8787
+              protocol: TCP
+          
+          livenessProbe:
+            {{- toYaml .Values.livenessProbe | nindent 12 }}
+
+          readinessProbe:
+            {{- toYaml .Values.readinessProbe | nindent 12 }}
+
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+
+          volumeMounts:
+            - name: config
+              mountPath: /config
+              subPath: {{ .Values.volume.subPath }}
+            - name: books
+              mountPath: /books
+            - name: downloads
+              mountPath: /downloads
+            - name: localtime
+              mountPath: /etc/localtime
+              readOnly: true
+
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: usb-local
+        - name: books
+          persistentVolumeClaim:
+            claimName: books
+        - name: downloads
+          persistentVolumeClaim:
+            claimName: downloads
+        - name: localtime
+          hostPath:
+            path: /etc/localtime
+            type: ""
+
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
