@@ -58,7 +58,7 @@ spec:
                 name: {{ include "radarr.fullname" . }}
 
           volumeMounts:
-            - name: data
+            - name: config
               mountPath: /config
               subPath: {{ .Values.volume.subPath }}
             - name: movies
@@ -70,7 +70,7 @@ spec:
               readOnly: true
 
       volumes:
-        - name: data
+        - name: config
           persistentVolumeClaim:
             claimName: usb-local
         - name: movies
