@@ -35,4 +35,5 @@ data:
   ENABLE_UFW: "false"
   UFW_ALLOW_GW_NET: "false"
   WEBPROXY_ENABLED: "false"
-  HEALTH_CHECK_HOST: "9.9.9.9"
+  # HEALTH_CHECK_HOST: "9.9.9.9"
+  OVERRIDE_DNS_1: "9.9.9.9"
