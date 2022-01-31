@@ -1,7 +1,7 @@
 dependencies:
 - name: transmission
   repository: https://barneybuffet.github.io/helm-barney-buffet/
-  version: 0.2.0
+  version: 0.3.0
 - name: jackett
   repository: https://barneybuffet.github.io/helm-barney-buffet/
   version: 0.1.0
@@ -17,5 +17,5 @@ dependencies:
 - name: readarr
   repository: https://barneybuffet.github.io/helm-barney-buffet/
   version: 0.1.0
-digest: sha256:27ad50a2530ab71f6e9936b8897c2d55c4b86622d076265a0eb1e711e085f37e
-generated: "2021-10-27T16:39:43.991129+11:00"
+digest: sha256:d107a92e560acad27f33d75cf25841df555b7ae8ba07424ec109637970767605
+generated: "2022-01-31T19:03:57.946307+11:00"

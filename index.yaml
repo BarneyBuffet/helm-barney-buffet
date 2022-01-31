@@ -3,7 +3,7 @@ entries:
   bitcoin-core:
   - apiVersion: v2
     appVersion: "22.0"
-    created: "2022-01-31T19:01:13.694224+11:00"
+    created: "2022-01-31T19:09:20.478422+11:00"
     description: A Helm chart for running a bitcoin core node
     digest: e919e9752e5b84a9e15cb87e38f3bb47c4e01b2da021acce167228832a334017
     name: bitcoin-core
@@ -14,7 +14,7 @@ entries:
   btc-rpc-explorer:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2022-01-31T19:01:13.700038+11:00"
+    created: "2022-01-31T19:09:20.483797+11:00"
     description: A Helm chart for Kubernetes
     digest: 679ce84693d896d26a0a4a8fda3e076e9ef6f4719b8a510888558bc95decc434
     name: btc-rpc-explorer
@@ -25,7 +25,7 @@ entries:
   jackett:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2022-01-31T19:01:13.705609+11:00"
+    created: "2022-01-31T19:09:20.489055+11:00"
     description: A Helm chart for Jackett indexer
     digest: a408524670bab613636e72a52dc22f8e1c4015f91860daff29e3688203780185
     name: jackett
@@ -36,7 +36,7 @@ entries:
   lidarr:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2022-01-31T19:01:13.711106+11:00"
+    created: "2022-01-31T19:09:20.49403+11:00"
     description: A Helm chart for Kubernetes
     digest: f562cc009015b87eb17185a51a8ba6c22d03e916f7ce650de4bde1d156c63de5
     name: lidarr
@@ -44,10 +44,37 @@ entries:
     urls:
     - https://barneybuffet.github.io/helm-barney-buffet/lidarr-0.1.0.tgz
     version: 0.1.0
+  pvr:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2022-01-31T19:09:20.50177+11:00"
+    dependencies:
+    - name: transmission
+      repository: https://barneybuffet.github.io/helm-barney-buffet/
+      version: 0.3.0
+    - name: jackett
+      repository: https://barneybuffet.github.io/helm-barney-buffet/
+      version: 0.1.0
+    - name: sonarr
+      repository: https://barneybuffet.github.io/helm-barney-buffet/
+      version: 0.1.0
+    - name: radarr
+      repository: https://barneybuffet.github.io/helm-barney-buffet/
+      version: 0.1.0
+    - name: lidarr
+      repository: https://barneybuffet.github.io/helm-barney-buffet/
+      version: 0.1.0
+    description: A Helm chart for deploying a personal video record apps
+    digest: 2c0c8457e4cb382ad65070a6f1999bf5c28f39ad7932f15f432ded8a265bf71b
+    name: pvr
+    type: application
+    urls:
+    - https://barneybuffet.github.io/helm-barney-buffet/pvr-0.1.0.tgz
+    version: 0.1.0
   radarr:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2022-01-31T19:01:13.7167+11:00"
+    created: "2022-01-31T19:09:20.506762+11:00"
     description: A Helm chart for Kubernetes
     digest: a8ca7e3d3ddd814fe3ec4976dfd569ba5d166ca8e5fdb11395c2d862af27ea74
     name: radarr
@@ -58,7 +85,7 @@ entries:
   readarr:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2022-01-31T19:01:13.722302+11:00"
+    created: "2022-01-31T19:09:20.511651+11:00"
     description: A Helm chart for Kubernetes
     digest: f28cf7d49f9252fa9c2de85794e4aba6d100c11f1a82fca1d32d697f1d4e45ad
     name: readarr
@@ -69,7 +96,7 @@ entries:
   sonarr:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2022-01-31T19:01:13.728066+11:00"
+    created: "2022-01-31T19:09:20.516574+11:00"
     description: A Helm chart for Sonarr
     digest: 46b3d1f15364ee958ff5be2166c9134a0a8425c3ce74aaae311d80c66550dc0f
     name: sonarr
@@ -80,7 +107,7 @@ entries:
   tor:
   - apiVersion: v2
     appVersion: 0.4.6.7
-    created: "2022-01-31T19:01:13.733703+11:00"
+    created: "2022-01-31T19:09:20.521528+11:00"
     description: A Helm chart for deploying a TOR proxy and control server.
     digest: f24136333e1ba705cbfb4c2c7fa188dec9016d8c43620648a990d9a5d26b1dee
     name: tor
@@ -91,7 +118,7 @@ entries:
   transmission:
   - apiVersion: v2
     appVersion: "4.0"
-    created: "2022-01-31T19:01:13.745023+11:00"
+    created: "2022-01-31T19:09:20.531814+11:00"
     description: A Helm chart for Transmission behind OpenVPN
     digest: a2e6ba9b742d900f609762a914466face6e7b18a2d76001668e3d5f23c366f7c
     name: transmission
@@ -101,7 +128,7 @@ entries:
     version: 0.3.0
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2022-01-31T19:01:13.739395+11:00"
+    created: "2022-01-31T19:09:20.526456+11:00"
     description: A Helm chart for Transmission behind OpenVPN
     digest: 3ad2b3b4366922af1fed2b7c003ea475b3a67ca353e2aad33e6e62714c0a208a
     name: transmission
@@ -109,4 +136,4 @@ entries:
     urls:
     - https://barneybuffet.github.io/helm-barney-buffet/transmission-0.2.0.tgz
     version: 0.2.0
-generated: "2022-01-31T19:01:13.687831+11:00"
+generated: "2022-01-31T19:09:20.472055+11:00"

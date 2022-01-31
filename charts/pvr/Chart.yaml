@@ -25,7 +25,7 @@ appVersion: "1.16.0"
 
 dependencies:
   - name: transmission
-    version: 0.2.0
+    version: 0.3.0
     repository: "https://barneybuffet.github.io/helm-barney-buffet/"
   - name: jackett
     version: 0.1.0
@@ -39,6 +39,6 @@ dependencies:
   - name: lidarr
     version: 0.1.0
     repository: "https://barneybuffet.github.io/helm-barney-buffet/"
-  - name: readarr
-    version: 0.1.0
-    repository: "https://barneybuffet.github.io/helm-barney-buffet/"
+  # - name: readarr
+  #   version: 0.1.0
+  #   repository: "https://barneybuffet.github.io/helm-barney-buffet/"
