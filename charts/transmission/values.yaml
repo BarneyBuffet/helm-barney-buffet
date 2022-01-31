@@ -53,11 +53,11 @@ podAnnotations: {}
 podSecurityContext: {}
 
 securityContext:
-  allowPrivilegeEscalation: true
+  # allowPrivilegeEscalation: true
   capabilities:
     add:
     - NET_ADMIN
-  privileged: true
+  # privileged: true
 
 service:
   type: LoadBalancer

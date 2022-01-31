@@ -69,8 +69,8 @@ spec:
             - name: data
               mountPath: /data/transmission-home
               subPath: {{ .Values.volume.subPath.transmission}}
-            - name: tunnel
-              mountPath: /dev/net/tun
+            # - name: tunnel
+            #   mountPath: /dev/net/tun
             - name: localtime
               mountPath: /etc/localtime
               readOnly: true
@@ -82,10 +82,10 @@ spec:
         - name: data
           persistentVolumeClaim:
             claimName: {{ include "transmission.fullname" . }}
-        - name: tunnel
-          hostPath:
-            path: /dev/net/tun
-            type: ""
+        # - name: tunnel
+        #   hostPath:
+        #     path: /dev/net/tun
+        #     type: ""
         - name: localtime
           hostPath:
             path: /etc/localtime
