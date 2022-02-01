@@ -25,3 +25,5 @@ Try out the templating with a dry run
 ```bash
 clear && helm install -n downloaders  --debug --dry-run transmission ./charts/transmission
 ```
+
+Need to set the firewall rules correctly
